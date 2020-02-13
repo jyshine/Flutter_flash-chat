@@ -41,13 +41,14 @@ class _ChatScreenState extends State<ChatScreen> {
 //      print(message.data);
 //    }
 //  }
-  void messagesStream() async {
-    await for (var snapshot in _fireStore.collection('messages').snapshots()) {
-      for (var message in snapshot.documents) {
-        print(message.data);
-      }
-    }
-  }
+
+//  void messagesStream() async {
+//    await for (var snapshot in _fireStore.collection('messages').snapshots()) {
+//      for (var message in snapshot.documents) {
+//        print(message.data);
+//      }
+//    }
+//  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +60,9 @@ class _ChatScreenState extends State<ChatScreen> {
               icon: Icon(Icons.close),
               onPressed: () {
                 //Implement logout functionality
-                messagesStream();
-//                _auth.signOut();
-//                Navigator.pop(context);
+//                messagesStream();
+                _auth.signOut();
+                Navigator.pop(context);
               }),
         ],
         title: Text('⚡️Chat'),
@@ -135,11 +136,6 @@ class MessagesStream extends StatelessWidget {
           final messageText = message.data['text'];
           final messageSender = message.data['sender'];
           final currentUser = loggedInUser.email;
-
-          if (currentUser == messageSender) {
-            //the message from the logged in user
-
-          }
 
           final messageBubble = MessageBubble(
             sender: messageSender,
